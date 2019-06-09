@@ -27,7 +27,6 @@ var removeall = function removeall() {
 };
 
 var makedec = function makedec() {
-
     var option = Math.floor(Math.random() * app.options.length);
     alert(app.options[option]);
 };

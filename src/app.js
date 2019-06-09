@@ -26,10 +26,8 @@ const removeall=()=>{
 };
 
 const makedec=()=>{
-
     const option=Math.floor(Math.random()*app.options.length);
     alert(app.options[option]);
-
 };
 
 const renderapp=()=>{
@@ -58,7 +56,5 @@ const renderapp=()=>{
 };
 
 renderapp();
-
-
 
 
