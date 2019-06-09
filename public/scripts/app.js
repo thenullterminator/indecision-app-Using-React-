@@ -1,38 +1,53 @@
-"use strict";
+'use strict';
 
-var user = {
-    name: "Dhairya Patel",
-    age: 18,
-    location: "Nashik"
+var count = 0;
+
+var inc = function inc() {
+    count++;
+    renderapp();
 };
 
-function getloc(loc) {
-    if (loc) {
-        return React.createElement(
-            "p",
+var dec = function dec() {
+    count--;
+    renderapp();
+};
+
+var reset = function reset() {
+    count = 0;
+    renderapp();
+};
+
+var renderapp = function renderapp() {
+
+    var template = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'h1',
             null,
-            "location: ",
-            loc
-        );
-    }
-}
+            'Counter: ',
+            count,
+            ' '
+        ),
+        React.createElement(
+            'button',
+            { onClick: inc },
+            '+1'
+        ),
+        React.createElement(
+            'button',
+            { onClick: dec },
+            '-1'
+        ),
+        React.createElement(
+            'button',
+            { onClick: reset },
+            'reset'
+        )
+    );
 
-var template = React.createElement(
-    "div",
-    null,
-    React.createElement(
-        "h1",
-        null,
-        user.name ? user.name : "Anonymous"
-    ),
-    user.age >= 18 && React.createElement(
-        "p",
-        null,
-        "Age: ",
-        user.age
-    ),
-    getloc(user.location)
-);
-var approot = document.getElementById('app');
+    var approot = document.getElementById('app');
+    ReactDOM.render(template, approot);
+};
 
-ReactDOM.render(template, approot);
+renderapp();

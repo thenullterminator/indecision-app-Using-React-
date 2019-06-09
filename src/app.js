@@ -1,24 +1,36 @@
+let count=0;
 
-var user={
-    name:"Dhairya Patel",
-    age:18,
-    location:"Nashik"
+const inc=()=>{
+    count++;
+    renderapp();
 };
 
-function getloc(loc){
-    if(loc)
-    {
-        return <p>location: {loc}</p>
-    }
-}
+const dec=()=>{
+    count--;
+    renderapp();
+};
 
-var template = (
-    <div>
-        <h1>{(user.name)? user.name:"Anonymous"}</h1>
-        {user.age>=18 && <p>Age: {user.age}</p>}
-        {getloc(user.location)}
-    </div>
-);
-var approot=document.getElementById('app');
+const reset=()=>{
+    count=0;
+    renderapp();
+};
 
-ReactDOM.render(template,approot);
+
+
+const renderapp=()=>{
+
+    const template=(
+        <div>
+    
+            <h1>Counter: {count} </h1>
+            <button onClick={inc}>+1</button>
+            <button onClick={dec}>-1</button>
+            <button onClick={reset}>reset</button>
+        </div>
+    );
+    
+    const approot=document.getElementById('app');
+    ReactDOM.render(template,approot);
+};
+
+renderapp();
