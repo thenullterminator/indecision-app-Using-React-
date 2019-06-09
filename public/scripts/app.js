@@ -1,91 +1,29 @@
 "use strict";
 
-console.log("Our App is running");
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var app = {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    title: "Indecision App",
-    subtitle: "Put your life in the hands of computer",
-    options: []
-};
+var Person = function () {
+    function Person() {
+        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Anonymous";
+        var age = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
-var onFormSubmit = function onFormSubmit(e) {
+        _classCallCheck(this, Person);
 
-    e.preventDefault();
-    var option = e.target.elements.option.value;
-
-    if (option) {
-        app.options.push(option);
-        e.target.elements.option.value = '';
-        renderapp();
+        this.name = name;
+        this.age = age;
     }
-};
 
-var removeall = function removeall() {
-    app.options = [];
-    renderapp();
-};
+    _createClass(Person, [{
+        key: "getDescription",
+        value: function getDescription() {
+            return this.name + " is " + this.age + " years old";
+        }
+    }]);
 
-var makedec = function makedec() {
-    var option = Math.floor(Math.random() * app.options.length);
-    alert(app.options[option]);
-};
+    return Person;
+}();
 
-var renderapp = function renderapp() {
-
-    var template = React.createElement(
-        "div",
-        null,
-        React.createElement(
-            "h1",
-            null,
-            app.title
-        ),
-        app.subtitle && React.createElement(
-            "p",
-            null,
-            app.subtitle
-        ),
-        React.createElement(
-            "p",
-            null,
-            app.options.length > 0 ? 'Here are your options' : 'No options'
-        ),
-        React.createElement(
-            "button",
-            { disabled: !app.options.length > 0, onClick: makedec },
-            "What should I do ?"
-        ),
-        React.createElement(
-            "button",
-            { onClick: removeall },
-            "Remove All"
-        ),
-        React.createElement(
-            "ol",
-            null,
-            app.options.map(function (val) {
-                return React.createElement(
-                    "li",
-                    { key: val },
-                    val
-                );
-            })
-        ),
-        React.createElement(
-            "form",
-            { onSubmit: onFormSubmit },
-            React.createElement("input", { type: "text", name: "option" }),
-            React.createElement(
-                "button",
-                null,
-                "Add Option"
-            )
-        )
-    );
-
-    var approot = document.getElementById('app');
-    ReactDOM.render(template, approot);
-};
-
-renderapp();
+var me = new Person('Dj', 19);
+console.log(me.getDescription());
