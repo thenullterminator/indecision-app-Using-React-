@@ -39,7 +39,11 @@ class Action extends React.Component{
         alert("pick");
     }
 }
-
+const template=(
+    <div>
+       
+    </div>
+);
 class Options extends React.Component{
     render(){
         return (
@@ -87,11 +91,7 @@ class Addoption extends React.Component{
     }
 }
 
-const template=(
-    <div>
-       
-    </div>
-);
+
 
 ReactDOM.render(<IndecisionApp/>,document.getElementById('app'));
 
