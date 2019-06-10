@@ -86,10 +86,15 @@ var Action = function (_React$Component3) {
                 null,
                 React.createElement(
                     "button",
-                    null,
+                    { onClick: this.pick },
                     "What should I do ?"
                 )
             );
+        }
+    }, {
+        key: "pick",
+        value: function pick() {
+            alert("pick");
         }
     }]);
 
@@ -111,12 +116,22 @@ var Options = function (_React$Component4) {
             return React.createElement(
                 "div",
                 null,
+                React.createElement(
+                    "button",
+                    { onClick: this.removeall },
+                    "Remove All"
+                ),
                 this.props.options.length > 0 ? 'Here are your options:' : 'No options',
                 this.props.options.map(function (op) {
                     return React.createElement(Option, { key: op, optxt: op });
                 }),
                 React.createElement(Option, null)
             );
+        }
+    }, {
+        key: "removeall",
+        value: function removeall() {
+            alert('Remove All');
         }
     }]);
 
@@ -160,14 +175,26 @@ var Addoption = function (_React$Component6) {
         value: function render() {
             return React.createElement(
                 "form",
-                null,
-                React.createElement("input", { type: "text", name: "addop" }),
+                { onSubmit: this.addop },
+                React.createElement("input", { type: "text", name: "option" }),
                 React.createElement(
                     "button",
                     null,
                     "Add Option"
                 )
             );
+        }
+    }, {
+        key: "addop",
+        value: function addop(e) {
+
+            e.preventDefault();
+            var op = e.target.elements.option.value.trim();
+
+            if (op) {
+                e.target.elements.option.value = '';
+                alert(op);
+            }
         }
     }]);
 

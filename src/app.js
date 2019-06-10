@@ -31,9 +31,12 @@ class Action extends React.Component{
     render(){
         return (
             <div>
-                <button>What should I do ?</button>
+                <button onClick={this.pick}>What should I do ?</button>
             </div>
         );
+    }
+    pick(){
+        alert("pick");
     }
 }
 
@@ -41,11 +44,16 @@ class Options extends React.Component{
     render(){
         return (
             <div>
+               <button onClick={this.removeall}>Remove All</button>
                {(this.props.options.length>0)?'Here are your options:':'No options'}
                {this.props.options.map((op)=><Option key={op} optxt={op}/>)}
                <Option/>
             </div>
         );
+    }
+
+    removeall(){
+        alert('Remove All');
     }
 }
 
@@ -59,11 +67,23 @@ class Option extends React.Component{
 class Addoption extends React.Component{
     render(){
         return (
-            <form>
-                <input type="text" name="addop"/>
+            <form onSubmit={this.addop}>
+                <input type="text" name="option"/>
                 <button>Add Option</button>
             </form>
         );
+    }
+
+    addop(e){
+
+        e.preventDefault();
+        const op=e.target.elements.option.value.trim();
+
+        if(op)
+        {
+            e.target.elements.option.value='';
+            alert(op);   
+        }
     }
 }
 
