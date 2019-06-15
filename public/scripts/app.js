@@ -19,6 +19,8 @@ var IndecisionApp = function (_React$Component) {
         _this.removeall = _this.removeall.bind(_this);
         _this.handlepick = _this.handlepick.bind(_this);
         _this.addoption = _this.addoption.bind(_this);
+        _this.removesingle = _this.removesingle.bind(_this);
+
         _this.state = {
             ops: props.options
         };
@@ -29,8 +31,17 @@ var IndecisionApp = function (_React$Component) {
         key: 'removeall',
         value: function removeall() {
             this.setState(function () {
+                return { ops: [] };
+            });
+        }
+    }, {
+        key: 'removesingle',
+        value: function removesingle(option) {
+            this.setState(function (prevState) {
                 return {
-                    ops: []
+                    ops: prevState.ops.filter(function (op) {
+                        return op !== option;
+                    })
                 };
             });
         }
@@ -50,10 +61,7 @@ var IndecisionApp = function (_React$Component) {
             }
 
             this.setState(function (prevState) {
-                // prevState.ops.push(op);
-                return {
-                    ops: prevState.ops.concat([op])
-                };
+                return { ops: prevState.ops.concat([op]) };
             });
         }
     }, {
@@ -66,7 +74,7 @@ var IndecisionApp = function (_React$Component) {
                 null,
                 React.createElement(Header, { subtitle: subtitle }),
                 React.createElement(Action, { hasOp: this.state.ops.length > 0, pick: this.handlepick }),
-                React.createElement(Options, { removeall: this.removeall, options: this.state.ops }),
+                React.createElement(Options, { removesingle: this.removesingle, removeall: this.removeall, options: this.state.ops }),
                 React.createElement(Addoption, { addoption: this.addoption })
             );
         }
@@ -119,7 +127,7 @@ var Options = function Options(props) {
         ),
         props.options.length > 0 ? 'Here are your options:' : 'No options',
         props.options.map(function (op) {
-            return React.createElement(Option, { key: op, optxt: op });
+            return React.createElement(Option, { removesingle: props.removesingle, key: op, optxt: op });
         }),
         React.createElement(Option, null)
     );
@@ -136,9 +144,20 @@ var Options = function Options(props) {
 var Option = function Option(props) {
 
     return React.createElement(
-        'p',
+        'div',
         null,
-        props.optxt
+        React.createElement(
+            'p',
+            null,
+            props.optxt,
+            props.optxt && React.createElement(
+                'button',
+                { onClick: function onClick(e) {
+                        props.removesingle(props.optxt);
+                    } },
+                'Remove'
+            )
+        )
     );
 };
 
@@ -190,6 +209,7 @@ var Addoption = function (_React$Component2) {
             if (!error) {
                 e.target.elements.option.value = '';
             }
+
             this.setState(function () {
                 return { error: error };
             });
@@ -203,4 +223,4 @@ IndecisionApp.defaultProps = {
     options: []
 };
 
-ReactDOM.render(React.createElement(IndecisionApp, { options: ['1', '2'] }), document.getElementById('app'));
+ReactDOM.render(React.createElement(IndecisionApp, { options: [] }), document.getElementById('app'));
