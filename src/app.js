@@ -56,51 +56,52 @@ class IndecisionApp extends React.Component  {
     }
 }
 
-class Header extends React.Component{
-    render()
-    {
-        return (
-                <div>
-                <h1>{this.props.title}</h1>
-                <h2>{this.props.subtitle}</h2>
-                </div>
-        );
-    }
-}
-
-class Action extends React.Component{
-    render(){
-        return (
+const Header=(props)=>{
+   
+    return (
             <div>
-                <button disabled={!this.props.hasOp} onClick={this.props.pick}>What should I do ?</button>
+            <h1>{props.title}</h1>
+            <h2>{props.subtitle}</h2>
             </div>
-        );
-    }
-}
-class Options extends React.Component{
-    render(){
+    );
+    
+};
+
+const Action=(props)=>{
+
+    return (
+        <div>
+            <button disabled={!props.hasOp} onClick={props.pick}>What should I do ?</button>
+        </div>
+    );
+    
+};
+const Options=(props)=>{
         return (
             <div>
-               <button onClick={this.props.removeall}>Remove All</button>
-               {(this.props.options.length>0)?'Here are your options:':'No options'}
-               {this.props.options.map((op)=><Option key={op} optxt={op}/>)}
+               <button onClick={props.removeall}>Remove All</button>
+               {(props.options.length>0)?'Here are your options:':'No options'}
+               {props.options.map((op)=><Option key={op} optxt={op}/>)}
                <Option/>
             </div>
         );
-    }
-
-    removeall(){
-        alert('Remove All');
-    }
 }
 
-class Option extends React.Component{
-    render(){
-        return (
-         <p>{this.props.optxt}</p>
-        );
-    }
-}
+// class Option extends React.Component{
+//     render(){
+//         return (
+//          <p>{this.props.optxt}</p>
+//         );
+//     }
+// }
+
+const Option=(props)=>{
+
+    return (
+        <p>{props.optxt}</p>
+       );
+
+};
 class Addoption extends React.Component{
     constructor(props){
         super(props);
