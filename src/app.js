@@ -1,14 +1,35 @@
 class IndecisionApp extends React.Component{
 
+    constructor(props){
+        super(props);
+        this.removeall=this.removeall.bind(this);
+        this.handlepick=this.handlepick.bind(this);
+        this.state={
+            ops:['one','two','three']
+        }
+    }
+
+    removeall(){
+        this.setState(()=>{
+            return {
+                ops:[]
+            }
+        });
+    }
+
+    handlepick(){
+        const op=Math.floor(Math.random()*this.state.ops.length);
+        alert(this.state.ops[op]);
+    }
+
    render(){
         const title="Indecision App";
         const subtitle="Put your life in the hands of computer";
-        let ops=['one','two','three'];
         return (
             <div>
                 <Header title={title} subtitle={subtitle}/>
-                <Action/>
-                <Options options={ops}/>
+                <Action hasOp={this.state.ops.length>0} pick={this.handlepick}/>
+                <Options removeall={this.removeall} options={this.state.ops}/>
                 <Addoption/>
             </div>
         );
@@ -31,24 +52,16 @@ class Action extends React.Component{
     render(){
         return (
             <div>
-                <button onClick={this.pick}>What should I do ?</button>
+                <button disabled={!this.props.hasOp} onClick={this.props.pick}>What should I do ?</button>
             </div>
         );
     }
-    pick(){
-        alert("pick");
-    }
 }
-const template=(
-    <div>
-       
-    </div>
-);
 class Options extends React.Component{
     render(){
         return (
             <div>
-               <button onClick={this.removeall}>Remove All</button>
+               <button onClick={this.props.removeall}>Remove All</button>
                {(this.props.options.length>0)?'Here are your options:':'No options'}
                {this.props.options.map((op)=><Option key={op} optxt={op}/>)}
                <Option/>
