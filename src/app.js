@@ -1,4 +1,4 @@
-class IndecisionApp extends React.Component{
+class IndecisionApp extends React.Component  {
 
     constructor(props){
         super(props);
@@ -6,7 +6,7 @@ class IndecisionApp extends React.Component{
         this.handlepick=this.handlepick.bind(this);
         this.addoption=this.addoption.bind(this);
         this.state={
-            ops:['one','two','three']
+            ops:[]
         }
     }
 
@@ -25,10 +25,19 @@ class IndecisionApp extends React.Component{
 
     addoption(op)
     {
+        if(!op)
+        {
+            return 'Enter a valid value to add option.'
+        }
+        else if(this.state.ops.indexOf(op)!=-1)
+        {
+            return 'The Option already exist.'
+        }
+
         this.setState((prevState)=>{
-            prevState.ops.push(op);
+            // prevState.ops.push(op);
             return{
-                ops:prevState.ops
+                ops:prevState.ops.concat([op])
             };
         });
     }
@@ -96,13 +105,19 @@ class Addoption extends React.Component{
     constructor(props){
         super(props);
         this.addop=this.addop.bind(this);
+        this.state={
+            error:undefined
+        };
     }
     render(){
         return (
+            <div>
+            <p>{this.state.error}</p>
             <form onSubmit={this.addop}>
                 <input type="text" name="option"/>
                 <button>Add Option</button>
             </form>
+            </div>
         );
     }
 
@@ -110,12 +125,15 @@ class Addoption extends React.Component{
 
         e.preventDefault();
         const op=e.target.elements.option.value.trim();
-
-        if(op)
+        const error=this.props.addoption(op);
+        if(!error)
         {
             e.target.elements.option.value='';
-            this.props.addoption(op);
         }
+        this.setState(()=>{
+            return{error};
+        });
+        
     }
 }
 
