@@ -4,6 +4,7 @@ class IndecisionApp extends React.Component{
         super(props);
         this.removeall=this.removeall.bind(this);
         this.handlepick=this.handlepick.bind(this);
+        this.addoption=this.addoption.bind(this);
         this.state={
             ops:['one','two','three']
         }
@@ -22,6 +23,16 @@ class IndecisionApp extends React.Component{
         alert(this.state.ops[op]);
     }
 
+    addoption(op)
+    {
+        this.setState((prevState)=>{
+            prevState.ops.push(op);
+            return{
+                ops:prevState.ops
+            };
+        });
+    }
+
    render(){
         const title="Indecision App";
         const subtitle="Put your life in the hands of computer";
@@ -30,7 +41,7 @@ class IndecisionApp extends React.Component{
                 <Header title={title} subtitle={subtitle}/>
                 <Action hasOp={this.state.ops.length>0} pick={this.handlepick}/>
                 <Options removeall={this.removeall} options={this.state.ops}/>
-                <Addoption/>
+                <Addoption addoption={this.addoption}/>
             </div>
         );
     }
@@ -82,6 +93,10 @@ class Option extends React.Component{
     }
 }
 class Addoption extends React.Component{
+    constructor(props){
+        super(props);
+        this.addop=this.addop.bind(this);
+    }
     render(){
         return (
             <form onSubmit={this.addop}>
@@ -99,7 +114,7 @@ class Addoption extends React.Component{
         if(op)
         {
             e.target.elements.option.value='';
-            alert(op);   
+            this.props.addoption(op);
         }
     }
 }

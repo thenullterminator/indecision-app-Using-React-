@@ -18,6 +18,7 @@ var IndecisionApp = function (_React$Component) {
 
         _this.removeall = _this.removeall.bind(_this);
         _this.handlepick = _this.handlepick.bind(_this);
+        _this.addoption = _this.addoption.bind(_this);
         _this.state = {
             ops: ['one', 'two', 'three']
         };
@@ -40,6 +41,16 @@ var IndecisionApp = function (_React$Component) {
             alert(this.state.ops[op]);
         }
     }, {
+        key: 'addoption',
+        value: function addoption(op) {
+            this.setState(function (prevState) {
+                prevState.ops.push(op);
+                return {
+                    ops: prevState.ops
+                };
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var title = "Indecision App";
@@ -50,7 +61,7 @@ var IndecisionApp = function (_React$Component) {
                 React.createElement(Header, { title: title, subtitle: subtitle }),
                 React.createElement(Action, { hasOp: this.state.ops.length > 0, pick: this.handlepick }),
                 React.createElement(Options, { removeall: this.removeall, options: this.state.ops }),
-                React.createElement(Addoption, null)
+                React.createElement(Addoption, { addoption: this.addoption })
             );
         }
     }]);
@@ -180,10 +191,13 @@ var Option = function (_React$Component5) {
 var Addoption = function (_React$Component6) {
     _inherits(Addoption, _React$Component6);
 
-    function Addoption() {
+    function Addoption(props) {
         _classCallCheck(this, Addoption);
 
-        return _possibleConstructorReturn(this, (Addoption.__proto__ || Object.getPrototypeOf(Addoption)).apply(this, arguments));
+        var _this6 = _possibleConstructorReturn(this, (Addoption.__proto__ || Object.getPrototypeOf(Addoption)).call(this, props));
+
+        _this6.addop = _this6.addop.bind(_this6);
+        return _this6;
     }
 
     _createClass(Addoption, [{
@@ -209,7 +223,7 @@ var Addoption = function (_React$Component6) {
 
             if (op) {
                 e.target.elements.option.value = '';
-                alert(op);
+                this.props.addoption(op);
             }
         }
     }]);
