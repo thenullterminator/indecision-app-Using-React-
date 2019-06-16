@@ -16,27 +16,47 @@ var IndecisionApp = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
-        _this.removeall = _this.removeall.bind(_this);
+        _this.handleremoveall = _this.handleremoveall.bind(_this);
         _this.handlepick = _this.handlepick.bind(_this);
         _this.addoption = _this.addoption.bind(_this);
-        _this.removesingle = _this.removesingle.bind(_this);
+        _this.handleremovesingle = _this.handleremovesingle.bind(_this);
 
         _this.state = {
-            ops: props.options
+            ops: []
         };
         return _this;
     }
 
     _createClass(IndecisionApp, [{
-        key: 'removeall',
-        value: function removeall() {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            if (prevState.ops.length !== this.state.ops.length) {
+                localStorage.setItem('DataBase', JSON.stringify(this.state.ops));
+            }
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            try {
+
+                var option = JSON.parse(localStorage.getItem('DataBase'));
+                if (option) {
+                    this.setState(function () {
+                        return { ops: option };
+                    });
+                }
+            } catch (e) {}
+        }
+    }, {
+        key: 'handleremoveall',
+        value: function handleremoveall() {
             this.setState(function () {
                 return { ops: [] };
             });
         }
     }, {
-        key: 'removesingle',
-        value: function removesingle(option) {
+        key: 'handleremovesingle',
+        value: function handleremovesingle(option) {
             this.setState(function (prevState) {
                 return {
                     ops: prevState.ops.filter(function (op) {
@@ -74,7 +94,7 @@ var IndecisionApp = function (_React$Component) {
                 null,
                 React.createElement(Header, { subtitle: subtitle }),
                 React.createElement(Action, { hasOp: this.state.ops.length > 0, pick: this.handlepick }),
-                React.createElement(Options, { removesingle: this.removesingle, removeall: this.removeall, options: this.state.ops }),
+                React.createElement(Options, { handleremovesingle: this.handleremovesingle, handleremoveall: this.handleremoveall, options: this.state.ops }),
                 React.createElement(Addoption, { addoption: this.addoption })
             );
         }
@@ -122,14 +142,14 @@ var Options = function Options(props) {
         null,
         React.createElement(
             'button',
-            { onClick: props.removeall },
+            { onClick: props.handleremoveall },
             'Remove All'
         ),
+        React.createElement('p', null),
         props.options.length > 0 ? 'Here are your options:' : 'No options',
         props.options.map(function (op) {
-            return React.createElement(Option, { removesingle: props.removesingle, key: op, optxt: op });
-        }),
-        React.createElement(Option, null)
+            return React.createElement(Option, { handleremovesingle: props.handleremovesingle, key: op, optxt: op });
+        })
     );
 };
 
@@ -150,10 +170,10 @@ var Option = function Option(props) {
             'p',
             null,
             props.optxt,
-            props.optxt && React.createElement(
+            React.createElement(
                 'button',
                 { onClick: function onClick(e) {
-                        props.removesingle(props.optxt);
+                        props.handleremovesingle(props.optxt);
                     } },
                 'Remove'
             )
@@ -219,8 +239,4 @@ var Addoption = function (_React$Component2) {
     return Addoption;
 }(React.Component);
 
-IndecisionApp.defaultProps = {
-    options: []
-};
-
-ReactDOM.render(React.createElement(IndecisionApp, { options: [] }), document.getElementById('app'));
+ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));

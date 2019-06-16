@@ -2,21 +2,39 @@ class IndecisionApp extends React.Component  {
 
     constructor(props){
         super(props);
-        this.removeall=this.removeall.bind(this);
+        this.handleremoveall=this.handleremoveall.bind(this);
         this.handlepick=this.handlepick.bind(this);
         this.addoption=this.addoption.bind(this);
-        this.removesingle=this.removesingle.bind(this);
+        this.handleremovesingle=this.handleremovesingle.bind(this);
 
         this.state={
-            ops:props.options
+            ops:[]
+        }
+    }
+    componentDidUpdate(prevProps,prevState)  {
+        if(prevState.ops.length!==this.state.ops.length)  {
+            localStorage.setItem('DataBase',JSON.stringify(this.state.ops));
         }
     }
 
-    removeall(){
+    componentDidMount(){
+        try {
+            
+            const option=JSON.parse(localStorage.getItem('DataBase'));
+            if(option)
+            {
+                this.setState(()=>({ops:option}));
+            }
+
+        }
+        catch(e){}
+    }
+
+    handleremoveall(){
         this.setState(()=>({ ops:[]}));
     }
 
-    removesingle(option){
+    handleremovesingle(option){
         this.setState((prevState)=>{
             return {
                 ops:prevState.ops.filter((op)=>{
@@ -52,7 +70,7 @@ class IndecisionApp extends React.Component  {
             <div>
                 <Header  subtitle={subtitle}/>
                 <Action hasOp={this.state.ops.length>0} pick={this.handlepick}/>
-                <Options removesingle={this.removesingle} removeall={this.removeall} options={this.state.ops}/>
+                <Options handleremovesingle={this.handleremovesingle} handleremoveall={this.handleremoveall} options={this.state.ops}/>
                 <Addoption addoption={this.addoption}/>
             </div>
         );
@@ -85,10 +103,10 @@ const Action=(props)=>{
 const Options=(props)=>{
         return (
             <div>
-               <button onClick={props.removeall}>Remove All</button>
+               <button onClick={props.handleremoveall}>Remove All</button>
+               <p></p>
                {(props.options.length>0)?'Here are your options:':'No options'}
-               {props.options.map((op)=><Option removesingle={props.removesingle} key={op} optxt={op}/>)}
-               <Option/>
+               {props.options.map((op)=><Option handleremovesingle={props.handleremovesingle} key={op} optxt={op}/>)}
             </div>
         );
 }
@@ -106,10 +124,9 @@ const Option=(props)=>{
     return (
         <div>
         <p>{props.optxt}
-        {props.optxt &&
         <button onClick={(e)=>{
-            props.removesingle(props.optxt);
-        }}>Remove</button>}
+            props.handleremovesingle(props.optxt);
+        }}>Remove</button>
         </p>
         </div>
        );
@@ -150,9 +167,5 @@ class Addoption extends React.Component{
 }
 
 
-IndecisionApp.defaultProps={
-    options:[]
-};
-
-ReactDOM.render(<IndecisionApp options={[]}/>,document.getElementById('app'));
+ReactDOM.render(<IndecisionApp />,document.getElementById('app'));
 
