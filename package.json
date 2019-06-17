@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --watch",
+    "build": "webpack",
+    "dev-server":"webpack-dev-server",
     "build-babel": "babel src/playground/counter.js --out-file=public/scripts/app.js --presets=env,react --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,7 +29,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "validator": "^11.0.0",
-    "webpack": "^4.34.0"
+    "webpack": "^4.34.0",
+    "webpack-dev-server": "^3.7.1"
   },
   "devDependencies": {
     "webpack-cli": "^3.3.4"
