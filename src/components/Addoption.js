@@ -21,7 +21,7 @@ export default class Addoption extends React.Component{
     }
 
     addop(e){
-
+        console.log("Hello:)");
         e.preventDefault();
         const op=e.target.elements.option.value.trim();
         const error=this.props.addoption(op);
