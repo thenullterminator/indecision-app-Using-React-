@@ -12,12 +12,10 @@ import Optionmodal from './modal';
     };
 
     handleclosemodal=()=>{
-        this.setState(()=>{
-            return {
-                selectedoption:undefined
-            }
-        });
-    };
+        this.setState(()=>({
+            selectedoption:undefined
+        }));
+    }   
 
     handleremoveall=()=>{
         this.setState(()=>({ ops:[]}));
