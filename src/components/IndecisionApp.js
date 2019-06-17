@@ -3,12 +3,21 @@ import Addoption from './Addoption';
 import Options from './Options';
 import Header from './Header';
 import Action from './Action';
+import Optionmodal from './modal';
  export default class IndecisionApp extends React.Component  {
 
     state={
-        ops:[]
+        ops:[],
+        selectedoption:undefined
     };
 
+    handleclosemodal=()=>{
+        this.setState(()=>{
+            return {
+                selectedoption:undefined
+            }
+        });
+    };
 
     handleremoveall=()=>{
         this.setState(()=>({ ops:[]}));
@@ -26,7 +35,11 @@ import Action from './Action';
 
     handlepick=()=>{
         const op=Math.floor(Math.random()*this.state.ops.length);
-        alert(this.state.ops[op]);
+        this.setState(()=>{
+            return {
+                selectedoption:this.state.ops[op]
+            };
+        });
     };
 
     addoption=(op)=>
@@ -74,6 +87,7 @@ import Action from './Action';
                 <Action hasOp={this.state.ops.length>0} pick={this.handlepick}/>
                 <Options handleremovesingle={this.handleremovesingle} handleremoveall={this.handleremoveall} options={this.state.ops}/>
                 <Addoption addoption={this.addoption}/>
+                <Optionmodal handleclosemodal={this.handleclosemodal} selectedoption={this.state.selectedoption}/>
             </div>
         );
     }
