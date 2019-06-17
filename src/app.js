@@ -1,4 +1,4 @@
-console.log("Starting with webpack :) .");
-import {add,square} from './utils'
-console.log(square(9));
-console.log(add(11,0));
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(<p>This is jsx from webpack</p>,document.getElementById('app'));
