@@ -14,6 +14,4 @@ const Optionmodal=(props)=>(
     </Modal>
 );
 
-
-
 export default Optionmodal;
