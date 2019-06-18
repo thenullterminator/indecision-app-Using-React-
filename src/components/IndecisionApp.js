@@ -82,9 +82,11 @@ import Optionmodal from './modal';
         return (
             <div>
                 <Header  subtitle={subtitle}/>
-                <Action hasOp={this.state.ops.length>0} pick={this.handlepick}/>
-                <Options handleremovesingle={this.handleremovesingle} handleremoveall={this.handleremoveall} options={this.state.ops}/>
-                <Addoption addoption={this.addoption}/>
+                <div className="container">
+                    <Action hasOp={this.state.ops.length>0} pick={this.handlepick}/>
+                    <Options handleremovesingle={this.handleremovesingle} handleremoveall={this.handleremoveall} options={this.state.ops}/>
+                    <Addoption addoption={this.addoption}/>
+                </div>
                 <Optionmodal handleclosemodal={this.handleclosemodal} selectedoption={this.state.selectedoption}/>
             </div>
         );
