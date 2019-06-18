@@ -7,3 +7,11 @@ body{
     font-family:  Helvetica, Arial,sans-serif;
     background:$off-blue;
 }
+
+button{
+    cursor:pointer;
+}
+
+button:disabled{
+    cursor:default;
+}
