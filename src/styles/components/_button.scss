@@ -1,10 +1,10 @@
-.big-button{
+.big-button {
     background:$purple;
     width:100%;
     border:none;
     color:white;
     font-weight:bold;
-    margin-bottom:$xl-size;
+    margin-bottom:$m-size;
     font-size:$l-size;
     padding:2.4rem;
     border-bottom:0.6rem solid darken($purple,10%);
@@ -30,4 +30,11 @@
     border:none;
     color:$off-white;
     padding:0;
+}
+
+@media (min-width:$desktop-breakpoint)
+{
+    .big-button{
+        margin-bottom:$xl-size;
+    }
 }
